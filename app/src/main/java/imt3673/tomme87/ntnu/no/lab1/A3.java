@@ -18,6 +18,12 @@ public class A3 extends AppCompatActivity {
         this.T4 = findViewById(R.id.T4);
     }
 
+    /**
+     * When B3 button pressed
+     * Set a result for this activity and finish.
+     *
+     * @param v
+     */
     public void B3Pressed(final View v) {
         final Intent intent = new Intent();
         final Bundle bundle = new Bundle();

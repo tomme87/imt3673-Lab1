@@ -19,26 +19,45 @@ public class A2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a2);
 
+        // Initialize edittexts.
         this.T2 = findViewById(R.id.T2);
         this.T3 = findViewById(R.id.T3);
 
+        // Get intent and initialize T2 with value from activity A1
         final Intent i = getIntent();
-        this.T2.setText(generateMsg(i.getStringExtra(A1.REQUEST)));
+        this.T2.setText(generateMsg(i.getStringExtra(A1.REQUEST), "Hello"));
     }
 
+    /**
+     * Run when B2 button is pressed in A2
+     * Starts activity A3 wich we pass with a intent and request code.
+     *
+     * @param v
+     */
     public void B2Pressed(final View v) {
         final Intent i = new Intent(this, A3.class);
         startActivityForResult(i, REQUEST_CODE);
     }
 
+    /**
+     * Run when activity A3 is done.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            this.T3.setText(data.getStringExtra(RESPONSE));
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                this.T3.setText(generateMsg(data.getStringExtra(RESPONSE), "From A3:"));
+            } else if (resultCode == RESULT_CANCELED) {
+                this.T3.setText(generateMsg("", "From A3:"));
+            }
         }
     }
 
-    private String generateMsg(final String name) {
-        return "Hello " + name;
+    private String generateMsg(final String name, final String prefix) {
+        return prefix + " " + name;
     }
 }
